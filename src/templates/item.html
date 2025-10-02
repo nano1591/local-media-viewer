@@ -6,7 +6,7 @@
     <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
     <title>{{item.title}}</title>
   </head>
-  <body class="w-full relative light">
+  <body class="w-full relative light" style="min-height: 150%">
     <div
       class="w-full overflow-x-hidden overflow-y-auto"
       style="
@@ -31,8 +31,6 @@
           class="video-js vjs-default-skin vjs-big-play-centered vjs-brightness"
           controls
           preload="auto"
-          width="640"
-          height="360"
           poster="{{item.cover_url}}"
           data-setup="{}"
         >
