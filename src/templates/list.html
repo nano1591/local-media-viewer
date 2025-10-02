@@ -1,0 +1,71 @@
+<html>
+  {% include "base.html" %}
+  <head>
+    <title>视频列表</title>
+  </head>
+  <body class="max-w-5xl m-auto relative light">
+    <md-card
+      class="md-filled-card w-full p-4 h-full flex flex-col overflow-x-hidden overflow-y-auto"
+      style="--_container-color: var(--md-sys-on-surface)"
+    >
+      <md-card class="md-elevated-card">
+        <md-item onclick="goToTop()" type="text">
+          <div slot="headline" class="md-typescale-title-medium">视频列表</div>
+          <div slot="end">共{{list_length}}条视频</div>
+        </md-item>
+      </md-card>
+      <md-divider class="my-4"></md-divider>
+      <div
+        class="grid gap-3 justify-center"
+        style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))"
+      >
+        {% for item in list %}
+        <md-card
+          id="{{item.id}}"
+          class="md-outlined-card"
+          role="button"
+          onclick="openDetail('{{item.id}}')"
+          style="
+            --md-outlined-card-container-color: var(--md-sys-color-background);
+          "
+        >
+          <img src="{{item.cover_url}}" class="w-full h-auto" />
+          <div class="flex flex-col">
+            <div class="md-typescale-body-medium">{{item.media_type}}</div>
+            <div class="md-typescale-body-large">{{item.title}}</div>
+          </div>
+        </md-card>
+        {% endfor %}
+        <div class="h-10"></div>
+      </div>
+    </md-card>
+    <md-branded-fab
+      variant="primary"
+      aria-label="refresh"
+      id="refresh"
+      onclick="refresh()"
+      class="absolute right-3 bottom-5"
+    >
+      <md-icon slot="icon">refresh</md-icon>
+    </md-branded-fab>
+  </body>
+  <script>
+    function goToTop() {
+      location.href = "/";
+    }
+    async function refresh() {
+      document.getElementById("refresh").disabled = true;
+      response = await fetch("/api/flush/metadata", {
+        method: "post",
+      });
+      location.reload();
+    }
+    function openDetail(id) {
+      location.href = "/item/" + id;
+    }
+    let lastClickId = "{{lastClickId}}";
+    if (lastClickId) {
+      document.getElementById(lastClickId)?.scrollIntoView();
+    }
+  </script>
+</html>
