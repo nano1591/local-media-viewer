@@ -6,60 +6,69 @@
     <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
     <title>{{item.title}}</title>
   </head>
-  <body class="max-w-5xl m-auto relative light">
-    <md-card
-      class="md-filled-card w-full p-4 h-full flex flex-col overflow-hidden overflow-x-hidden overflow-y-auto"
-      style="--_container-color: var(--md-sys-on-surface)"
+  <body class="w-full relative light">
+    <div
+      class="w-full overflow-x-hidden overflow-y-auto"
+      style="
+        padding-left: calc((100% - 1080px) / 2);
+        padding-right: calc((100% - 1080px) / 2);
+      "
     >
-      <md-card class="md-elevated-card" onclick="goBack('{{id}}')">
-        <md-list-item type="button">
-          <md-icon slot="start">arrow_back</md-icon>
-          <div slot="headline" class="md-typescale-title-large">返回</div>
-        </md-list-item>
-      </md-card>
-      <md-divider class="my-4"></md-divider>
-
-      <video
-        id="my-player"
-        class="video-js vjs-default-skin vjs-big-play-centered vjs-brightness"
-        controls
-        preload="auto"
-        width="640"
-        height="360"
-        poster="{{item.cover_url}}"
-        data-setup="{}"
-      >
-        {% if item.media_type == "m3u8" %}
-        <source src="{{item.media_url}}" type="application/x-mpegURL" />
-        {% endif %} {% if item.media_type == "mp4" %}
-        <source src="{{item.media_url}}" type="video/mp4" />
-        {% endif %}
-      </video>
-      <md-divider class="my-2"></md-divider>
-
       <md-card
-        class="md-outlined-card"
-        style="
-          --md-outlined-card-container-color: var(--md-sys-color-background);
-        "
+        class="md-filled-card w-full p-4 h-full flex flex-col overflow-hidden overflow-x-hidden overflow-y-auto"
+        style="--_container-color: var(--md-sys-on-surface)"
       >
-        <md-item type="text">
-          <div slot="headline" class="md-typescale-title-large">
-            {{item.title}}
-          </div>
-          <div slot="supporting-text">
-            {{item.media_type}} {{item.media_time}}
-          </div>
-        </md-item>
-
+        <md-card class="md-elevated-card" onclick="goBack('{{id}}')">
+          <md-list-item type="button">
+            <md-icon slot="start">arrow_back</md-icon>
+            <div slot="headline" class="md-typescale-title-large">返回</div>
+          </md-list-item>
+        </md-card>
         <md-divider class="my-4"></md-divider>
-        <md-chip-set>
-          {% for tag in item.tags %}
-          <md-assist-chip label="{{tag}}"></md-assist-chip>
-          {% endfor %}
-        </md-chip-set>
+
+        <video
+          id="my-player"
+          class="video-js vjs-default-skin vjs-big-play-centered vjs-brightness"
+          controls
+          preload="auto"
+          width="640"
+          height="360"
+          poster="{{item.cover_url}}"
+          data-setup="{}"
+        >
+          {% if item.media_type == "m3u8" %}
+          <source src="{{item.media_url}}" type="application/x-mpegURL" />
+          {% endif %} {% if item.media_type == "mp4" %}
+          <source src="{{item.media_url}}" type="video/mp4" />
+          {% endif %}
+        </video>
+        <md-divider class="my-2"></md-divider>
+
+        <md-card
+          class="md-outlined-card"
+          style="
+            --md-outlined-card-container-color: var(--md-sys-color-background);
+          "
+        >
+          <md-item type="text">
+            <div slot="headline" class="md-typescale-title-large">
+              {{item.title}}
+            </div>
+            <div slot="supporting-text">
+              {{item.media_type}} {{item.media_time}}
+            </div>
+          </md-item>
+
+          <md-divider class="my-4"></md-divider>
+          <md-chip-set>
+            {% for tag in item.tags %}
+            <md-assist-chip label="{{tag}}"></md-assist-chip>
+            {% endfor %}
+          </md-chip-set>
+        </md-card>
       </md-card>
-    </md-card>
+    </div>
+    <div class="h-10"></div>
   </body>
   <script>
     function goBack(id) {

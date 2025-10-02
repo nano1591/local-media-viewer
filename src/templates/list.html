@@ -3,48 +3,61 @@
   <head>
     <title>视频列表</title>
   </head>
-  <body class="max-w-5xl m-auto relative light">
-    <md-card
-      class="md-filled-card w-full p-4 h-full flex flex-col overflow-x-hidden overflow-y-auto"
-      style="--_container-color: var(--md-sys-on-surface)"
+  <body class="w-full relative light">
+    <div
+      class="w-full overflow-x-hidden overflow-y-auto"
+      style="
+        padding-left: calc((100% - 1080px) / 2);
+        padding-right: calc((100% - 1080px) / 2);
+      "
     >
-      <md-card class="md-elevated-card">
-        <md-item onclick="goToTop()" type="text">
-          <div slot="headline" class="md-typescale-title-medium">视频列表</div>
-          <div slot="end">共{{list_length}}条视频</div>
-        </md-item>
-      </md-card>
-      <md-divider class="my-4"></md-divider>
-      <div
-        class="grid gap-3 justify-center"
-        style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))"
+      <md-card
+        class="md-filled-card w-full p-4 h-full flex flex-col"
+        style="--_container-color: var(--md-sys-on-surface)"
       >
-        {% for item in list %}
-        <md-card
-          id="{{item.id}}"
-          class="md-outlined-card"
-          role="button"
-          onclick="openDetail('{{item.id}}')"
-          style="
-            --md-outlined-card-container-color: var(--md-sys-color-background);
-          "
-        >
-          <img src="{{item.cover_url}}" class="w-full h-auto" />
-          <div class="flex flex-col">
-            <div class="md-typescale-body-medium">{{item.media_type}}</div>
-            <div class="md-typescale-body-large">{{item.title}}</div>
-          </div>
+        <md-card class="md-elevated-card">
+          <md-item onclick="goToTop()" type="text">
+            <div slot="headline" class="md-typescale-title-medium">
+              视频列表
+            </div>
+            <div slot="end">共{{list_length}}条视频</div>
+          </md-item>
         </md-card>
-        {% endfor %}
-        <div class="h-10"></div>
-      </div>
-    </md-card>
+        <md-divider class="my-4"></md-divider>
+        <div
+          class="grid gap-3 justify-center"
+          style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))"
+        >
+          {% for item in list %}
+          <md-card
+            id="{{item.id}}"
+            class="md-outlined-card"
+            role="button"
+            onclick="openDetail('{{item.id}}')"
+            style="
+              --md-outlined-card-container-color: var(
+                --md-sys-color-background
+              );
+            "
+          >
+            <img src="{{item.cover_url}}" class="w-full h-auto" />
+            <div class="flex flex-col">
+              <div class="md-typescale-body-medium">{{item.media_type}}</div>
+              <div class="md-typescale-body-large">{{item.title}}</div>
+            </div>
+          </md-card>
+          {% endfor %}
+          <div class="h-10"></div>
+        </div>
+      </md-card>
+    </div>
     <md-branded-fab
       variant="primary"
       aria-label="refresh"
       id="refresh"
       onclick="refresh()"
-      class="absolute right-3 bottom-5"
+      class="absolute bottom-5"
+      style="right: calc(((100% - 1080px) / 2) + 12px)"
     >
       <md-icon slot="icon">refresh</md-icon>
     </md-branded-fab>
