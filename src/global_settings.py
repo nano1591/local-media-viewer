@@ -25,7 +25,7 @@ class GlobalSettings(BaseSettings):
         return (
             YamlConfigSettingsSource(
                 settings_cls,
-                yaml_file=Path("config.local.yaml"),
+                yaml_file=Path("config.yaml"),
                 yaml_file_encoding="utf-8",
             ),
         )

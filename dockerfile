@@ -12,12 +12,14 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件（如果有 requirements.txt / poetry.lock）
 RUN pip install uv
 COPY ./pyproject.toml ./uv.lock .
 RUN uv sync
+ENV PATH="/app/.venv/bin:${PATH}"
 
 # 复制项目文件到容器
 COPY . .
@@ -25,3 +27,4 @@ COPY . .
 # 默认使用 uvicorn 启动 FastAPI
 # 假设入口文件是 main.py，里面有 app 对象
 CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "critical"]
+# CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8000"]
